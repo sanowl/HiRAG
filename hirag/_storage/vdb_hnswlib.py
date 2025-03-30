@@ -9,6 +9,7 @@ import xxhash
 
 from .._utils import logger
 from ..base import BaseVectorStorage
+import fickling
 
 
 @dataclass
@@ -48,7 +49,7 @@ class HNSWVectorStorage(BaseVectorStorage):
                 self._index_file_name, max_elements=self.max_elements
             )
             with open(self._metadata_file_name, "rb") as f:
-                self._metadata, self._current_elements = pickle.load(f)
+                self._metadata, self._current_elements = fickling.load(f)
             logger.info(
                 f"Loaded existing index for {self.namespace} with {self._current_elements} elements"
             )
