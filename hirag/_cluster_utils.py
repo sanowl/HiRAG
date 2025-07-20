@@ -1,5 +1,4 @@
 import logging
-import random
 import re
 import numpy as np
 import tiktoken
@@ -18,13 +17,14 @@ from .base import (
 )
 from ._utils import split_string_by_multi_markers, clean_str, is_float_regex
 from .prompt import GRAPH_FIELD_SEP, PROMPTS
+import secrets
 
 # Initialize logging
 logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
 # Set a random seed for reproducibility
 RANDOM_SEED = 224
-random.seed(RANDOM_SEED)
+secrets.SystemRandom().seed(RANDOM_SEED)
 
 
 def global_cluster_embeddings(
@@ -258,7 +258,7 @@ class Hierarchical_Clustering(ClusteringAlgorithm):
                     
                     # Randomly select 80% of the nodes
                     num_to_select = max(1, int(len(cluster_nodes) * base_discount))  # Ensure at least one node is selected
-                    cluster_nodes = random.sample(cluster_nodes, num_to_select)
+                    cluster_nodes = secrets.SystemRandom().sample(cluster_nodes, num_to_select)
 
                     # Recalculate the total length
                     total_length = sum(
